@@ -1,0 +1,20 @@
+{
+    "name": "ts_snowflakes",
+    "version": "1.0.0",
+    "description": "",
+    "main": "compiled/index.js",
+    "types": "compiled/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "run": "npm run build && node ."
+    },
+    "author": "Aery",
+    "license": "UNLICENSED",
+    "devDependencies": {
+        "@types/node": "^14.0.13",
+        "typescript": "^3.9.5"
+    },
+    "dependencies": {
+        "ts_bitpattern": "git+https://github.com/aery-chan/ts_bitpattern.git"
+    }
+}
