@@ -1,42 +1,20 @@
-import { BitPattern, Pattern, Data } from "ts_bitpattern";
-
-import { Snowflake } from "./Snowflake";
-
-type QueuedSnowflake = {
-    res: (value?: Snowflake | PromiseLike<Snowflake>) => void,
-    rej: (reason?: any) => void,
-    data: Data
-}
-
-export class Snowflakes {
-
-    static readonly TIME: string = "time";
-    static readonly INCREMENT: string = "increment";
-
-    readonly pattern: Pattern;
-    readonly bitpattern: BitPattern;
-    readonly epoch: Date;
-    readonly data: Data;
-
-    private date_size: number;
-    private increment_size: number;
-
-    private generating: boolean = false;
-    private queue: QueuedSnowflake[] = [];
-    private last_date: Date;
-    private increment: number;
-
-    constructor(pattern: Pattern, epoch: Date, data?: Data) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Snowflakes = void 0;
+const ts_bitpattern_1 = require("ts_bitpattern");
+const Snowflake_1 = require("./Snowflake");
+class Snowflakes {
+    constructor(pattern, epoch, data) {
+        this.generating = false;
+        this.queue = [];
         this.pattern = pattern;
-        this.bitpattern = new BitPattern(pattern);
+        this.bitpattern = new ts_bitpattern_1.BitPattern(pattern);
         this.epoch = epoch;
         this.data = data || {};
-
         // Find the sizes of date and increment
         for (const element of pattern) {
-            const symbol: string = element[1];
-            const size: number = element[0];
-
+            const symbol = element[1];
+            const size = element[0];
             switch (symbol) {
                 case Snowflakes.TIME:
                     this.date_size = size;
@@ -46,7 +24,6 @@ export class Snowflakes {
                     break;
             }
         }
-
         // Make sure sizes were found
         if (!this.date_size) {
             throw new Error("No size for date specified");
@@ -55,72 +32,59 @@ export class Snowflakes {
             throw new Error("No size for increment specified");
         }
     }
-
-    async generate(data?: Data): Promise<Snowflake> {
+    async generate(data) {
         return new Promise((res, rej) => {
             data = data || {};
-
             this.queue.push({
                 res,
                 rej,
                 data
             });
-    
             // If the generation loop isn't already running, start it
             if (!this.generating) {
                 this.generation_loop();
             }
         });
     }
-
-    from_number(n: bigint): Snowflake {
-        const data: Data = this.bitpattern.pull(n);
-
-        const date: Date = new Date(this.epoch.getTime() + Number(data[Snowflakes.TIME]));
-        const increment: number = Number(data[Snowflakes.INCREMENT]);
-
+    from_number(n) {
+        const data = this.bitpattern.pull(n);
+        const date = new Date(this.epoch.getTime() + Number(data[Snowflakes.TIME]));
+        const increment = Number(data[Snowflakes.INCREMENT]);
         delete data[Snowflakes.TIME];
         delete data[Snowflakes.INCREMENT];
-
-        return new Snowflake(this, date, increment, data);
+        return new Snowflake_1.Snowflake(this, date, increment, data);
     }
-
-    private generation_loop() {
+    generation_loop() {
         this.generating = true;
-
         while (this.queue.length > 0) {
-            const queued_snowflake: QueuedSnowflake = this.queue[0];
-
-            const data: Data = {
+            const queued_snowflake = this.queue[0];
+            const data = {
                 ...this.data,
                 ...queued_snowflake.data
             };
-
-            const date: Date = new Date();
-            const time: number = date.getTime() - this.epoch.getTime();
-
+            const date = new Date();
+            const time = date.getTime() - this.epoch.getTime();
             if (time >= 2 ** this.date_size) {
                 return queued_snowflake.rej(new Error(`Date time <${time}> with size <${Math.ceil(Math.log2(time) + 1)} bits> has reached it's maximum specified size of <${this.date_size} bits>. Allocate more bits or increase your epoch`));
             }
-
             if (this.last_date && date.getTime() == this.last_date.getTime()) {
                 this.increment++;
-
                 if (this.increment >= 2 ** this.increment_size) {
                     // We can't generate more snowflakes at this time. Try again some other time
                     return setTimeout(this.generation_loop);
                 }
-            } else {
+            }
+            else {
                 this.increment = 0;
             }
-
             this.last_date = date;
-
-            queued_snowflake.res(new Snowflake(this, date, this.increment, data));
+            queued_snowflake.res(new Snowflake_1.Snowflake(this, date, this.increment, data));
             this.queue.shift();
         }
-
         this.generating = false;
     }
-
 }
+exports.Snowflakes = Snowflakes;
+Snowflakes.TIME = "time";
+Snowflakes.INCREMENT = "increment";
+//# sourceMappingURL=Snowflakes.js.map

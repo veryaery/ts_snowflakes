@@ -6,12 +6,13 @@
     "types": "compiled/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "run": "npm run build && node ."
+        "test": "npm run build && jest"
     },
     "author": "Aery",
     "license": "UNLICENSED",
     "devDependencies": {
         "@types/node": "^14.0.13",
+        "jest": "^26.0.1",
         "typescript": "^3.9.5"
     },
     "dependencies": {

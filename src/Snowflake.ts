@@ -19,7 +19,7 @@ export class Snowflake {
     to_number(): bigint {
         const data: Data = { ...this.data };
 
-        data[Snowflakes.DATE] = BigInt(this.date.getTime() - this.snowflakes.epoch.getTime());
+        data[Snowflakes.TIME] = BigInt(this.date.getTime() - this.snowflakes.epoch.getTime());
         data[Snowflakes.INCREMENT] = BigInt(this.increment);
 
         return this.snowflakes.bitpattern.fill(data);
