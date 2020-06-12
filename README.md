@@ -19,7 +19,7 @@ const snowflake: Snowflake = await snowflakes.generate();
 /*
     Snowflake {
         date: ...,
-        increment: ...,
+        increment: 0,
         data: {
             node: 2n,
             process: 4n
@@ -38,7 +38,7 @@ const reconstructed_snowflake: Snowflake = Snowflakes.from_number(n);
 /*
     Snowflake {
         date: ...,
-        increment: ...,
+        increment: 0,
         data: {
             node: 2n,
             process: 4n
