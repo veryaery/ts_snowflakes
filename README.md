@@ -18,6 +18,7 @@ const snowflakes: Snowflakes = new Snowflakes(pattern, new Date(), {
 const snowflake: Snowflake = await snowflakes.generate();
 /*
     Snowflake {
+        ...,
         date: ...,
         increment: 0,
         data: {
@@ -37,6 +38,7 @@ const n: bigint = snowflake.to_number();
 const reconstructed_snowflake: Snowflake = Snowflakes.from_number(n);
 /*
     Snowflake {
+        ...,
         date: ...,
         increment: 0,
         data: {
