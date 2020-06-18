@@ -1,5 +1,8 @@
 # Snowflakes
 
+This library uses my [BitPattern](https://github.com/aery-chan/ts_bitpattern) library for encoding and decoding snowflakes.
+The pattern symbols "time" and "increment" are reserved for Snowflakes.TIME and Snowflakes.INCREMENT
+
 ## Installing
 
 ```
