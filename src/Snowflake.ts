@@ -22,7 +22,7 @@ export class Snowflake {
         data[Snowflakes.TIME] = BigInt(this.date.getTime() - this.snowflakes.epoch.getTime());
         data[Snowflakes.INCREMENT] = BigInt(this.increment);
 
-        return this.snowflakes.bitpattern.fill(data);
+        return this.snowflakes.pattern.fill(data);
     }
 
 }

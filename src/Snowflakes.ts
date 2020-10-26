@@ -13,8 +13,7 @@ export class Snowflakes {
     static readonly TIME: string = "time";
     static readonly INCREMENT: string = "increment";
 
-    readonly pattern: Pattern;
-    readonly bitpattern: BitPattern;
+    readonly pattern: BitPattern;
     readonly epoch: Date;
     readonly data: Data;
 
@@ -27,8 +26,7 @@ export class Snowflakes {
     private increment: number;
 
     constructor(pattern: Pattern, epoch: Date, data?: Data) {
-        this.pattern = pattern;
-        this.bitpattern = new BitPattern(pattern);
+        this.pattern = new BitPattern(pattern);
         this.epoch = epoch;
         this.data = data || {};
 
@@ -74,7 +72,7 @@ export class Snowflakes {
     }
 
     from_number(n: bigint): Snowflake {
-        const data: Data = this.bitpattern.pull(n);
+        const data: Data = this.pattern.pull(n);
 
         const date: Date = new Date(this.epoch.getTime() + Number(data[Snowflakes.TIME]));
         const increment: number = Number(data[Snowflakes.INCREMENT]);

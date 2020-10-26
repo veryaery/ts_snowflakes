@@ -13,7 +13,7 @@ class Snowflake {
         const data = { ...this.data };
         data[Snowflakes_1.Snowflakes.TIME] = BigInt(this.date.getTime() - this.snowflakes.epoch.getTime());
         data[Snowflakes_1.Snowflakes.INCREMENT] = BigInt(this.increment);
-        return this.snowflakes.bitpattern.fill(data);
+        return this.snowflakes.pattern.fill(data);
     }
 }
 exports.Snowflake = Snowflake;

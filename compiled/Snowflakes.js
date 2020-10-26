@@ -7,8 +7,7 @@ class Snowflakes {
     constructor(pattern, epoch, data) {
         this.generating = false;
         this.queue = [];
-        this.pattern = pattern;
-        this.bitpattern = new ts_bitpattern_1.BitPattern(pattern);
+        this.pattern = new ts_bitpattern_1.BitPattern(pattern);
         this.epoch = epoch;
         this.data = data || {};
         // Find the sizes of date and increment
@@ -47,7 +46,7 @@ class Snowflakes {
         });
     }
     from_number(n) {
-        const data = this.bitpattern.pull(n);
+        const data = this.pattern.pull(n);
         const date = new Date(this.epoch.getTime() + Number(data[Snowflakes.TIME]));
         const increment = Number(data[Snowflakes.INCREMENT]);
         delete data[Snowflakes.TIME];

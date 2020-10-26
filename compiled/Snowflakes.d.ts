@@ -3,8 +3,7 @@ import { Snowflake } from "./Snowflake";
 export declare class Snowflakes {
     static readonly TIME: string;
     static readonly INCREMENT: string;
-    readonly pattern: Pattern;
-    readonly bitpattern: BitPattern;
+    readonly pattern: BitPattern;
     readonly epoch: Date;
     readonly data: Data;
     private date_size;
