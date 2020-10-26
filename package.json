@@ -16,6 +16,6 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "ts_bitpattern": "git+https://github.com/aery-chan/ts_bitpattern.git"
+        "ts_bitpattern": "git+https://github.com/nyaaery/ts_bitpattern.git"
     }
 }

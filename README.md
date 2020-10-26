@@ -1,12 +1,12 @@
 # Snowflakes
 
-This library generates, encodes, and decodes Snowflakes.
+This library generates and decodes Snowflakes.  
 The pattern symbols "time" and "increment" are reserved for Snowflakes.TIME and Snowflakes.INCREMENT
 
 ## Installing
 
 ```
-npm i git+https://github.com/aery-chan/ts_snowflakes.git
+npm i git+https://github.com/nyaaery/ts_snowflakes.git
 ```
 
 ## Examples
